@@ -1,0 +1,136 @@
+- id: '<deineAutomationID>'
+  alias: Batterieladung nullen
+  description: ''
+  triggers:
+  - entity_id:
+    - sensor.outputpackpower
+    above: 0
+    trigger: numeric_state
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.packinputpower
+      state: '0'
+    - condition: state
+      entity_id: sensor.outputpackpower
+      state: '0'
+  actions:
+  - metadata: {}
+    data:
+      qos: '0'
+      topic: <appKey>/<deviceID>/state
+      payload: '{"packInputPower":0}'
+    action: mqtt.publish
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      evaluate_payload: false
+      qos: 0
+      retain: false
+      topic: <appKey>/<deviceID>/state
+      payload: '{"outputPackPower":0}'
+  mode: single
+
+- id: '<deineAutomationID>'
+  alias: Batterieentladung nullen
+  description: ''
+  triggers:
+  - entity_id:
+    - sensor.packinputpower
+    above: 0
+    trigger: numeric_state
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.outputpackpower
+      state: '0'
+  actions:
+  - metadata: {}
+    data:
+      qos: '0'
+      topic: <appKey>/<deviceID>/state
+      payload: '{"outputPackPower":0}'
+    action: mqtt.publish
+  mode: single
+
+- id: '<deineAutomationID>'
+  alias: Setze outputpackpower auf 0 nach 180 Sekunden Inaktivität
+  description: Setze den Sensor outputpackpower auf 0, wenn er sich 180 Sekunden lang
+    nicht ändert.
+  triggers:
+  - entity_id:
+    - sensor.outputpackpower
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 300
+    trigger: state
+  conditions: []
+  actions:
+  - action: mqtt.publish
+    data:
+      qos: '0'
+      payload: '{"outputPackPower":0}'
+      topic: <appKey>/<deviceID>/state
+  mode: single
+
+- id: '<deineAutomationID>'
+  alias: Setze outputhomepower auf 0 nach 180 Sekunden Inaktivität
+  description: Setze den Sensor outputhomepower auf 0, wenn er sich 180 Sekunden lang
+    nicht ändert.
+  triggers:
+  - entity_id:
+    - sensor.outputhomepower
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 300
+    trigger: state
+  conditions: []
+  actions:
+  - action: mqtt.publish
+    data:
+      qos: '0'
+      payload: '{"outputHomePower":0}'
+      topic: <appKey>/<deviceID>/state
+  mode: single
+
+- id: '<deineAutomationID>'
+  alias: Setze solarpower1 auf 0, wenn er sich 180 Sekunden lang nicht ändert
+  description: Setze den Sensor solarpower1 auf 0, wenn er sich 180 Sekunden lang
+    nicht ändert.
+  triggers:
+  - entity_id:
+    - sensor.solarpower1
+    for:
+      seconds: 180
+    trigger: state
+  conditions: []
+  actions:
+  - action: mqtt.publish
+    data:
+      qos: '0'
+      payload: '{"solarPower1":0}'
+      topic: <appKey>/<deviceID>/state
+  mode: single
+
+- id: '<deineAutomationID>'
+  alias: Setze solarpower2 auf 0, wenn er sich 180 Sekunden lang nicht ändert
+  description: Setze den Sensor solarpower2 auf 0, wenn er sich 180 Sekunden lang
+    nicht ändert.
+  triggers:
+  - entity_id:
+    - sensor.solarpower2
+    for:
+      seconds: 180
+    trigger: state
+  conditions: []
+  actions:
+  - action: mqtt.publish
+    data:
+      qos: '0'
+      payload: '{"solarPower2":0}'
+      topic: <appKey>/<deviceID>/state
+  mode: single
