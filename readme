@@ -1,3 +1,4 @@
+#Batterie Ladeleistung Nullen
 - id: '<deineAutomationID>'
   alias: Batterieladung nullen
   description: ''
@@ -32,6 +33,7 @@
       payload: '{"outputPackPower":0}'
   mode: single
 
+#Batterie Entladeleistung Nullen
 - id: '<deineAutomationID>'
   alias: Batterieentladung nullen
   description: ''
@@ -55,8 +57,9 @@
     action: mqtt.publish
   mode: single
 
+#OutputpackPower auf 0 nach 300sec Inaktivität
 - id: '<deineAutomationID>'
-  alias: Setze outputpackpower auf 0 nach 180 Sekunden Inaktivität
+  alias: Setze outputpackpower auf 0 nach 300 Sekunden Inaktivität
   description: Setze den Sensor outputpackpower auf 0, wenn er sich 180 Sekunden lang
     nicht ändert.
   triggers:
@@ -76,8 +79,9 @@
       topic: <appKey>/<deviceID>/state
   mode: single
 
+#OutputHomePower auf 0 nach 300sec Inaktivität
 - id: '<deineAutomationID>'
-  alias: Setze outputhomepower auf 0 nach 180 Sekunden Inaktivität
+  alias: Setze outputhomepower auf 0 nach 300 Sekunden Inaktivität
   description: Setze den Sensor outputhomepower auf 0, wenn er sich 180 Sekunden lang
     nicht ändert.
   triggers:
@@ -97,6 +101,7 @@
       topic: <appKey>/<deviceID>/state
   mode: single
 
+#solarpower1 auf 0 nach 180sec Inaktivität
 - id: '<deineAutomationID>'
   alias: Setze solarpower1 auf 0, wenn er sich 180 Sekunden lang nicht ändert
   description: Setze den Sensor solarpower1 auf 0, wenn er sich 180 Sekunden lang
@@ -116,6 +121,7 @@
       topic: <appKey>/<deviceID>/state
   mode: single
 
+#solarpower2 auf 0 nach 180sec Inaktivität
 - id: '<deineAutomationID>'
   alias: Setze solarpower2 auf 0, wenn er sich 180 Sekunden lang nicht ändert
   description: Setze den Sensor solarpower2 auf 0, wenn er sich 180 Sekunden lang
