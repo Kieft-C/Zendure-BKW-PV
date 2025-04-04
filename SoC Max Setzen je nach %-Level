@@ -1,0 +1,34 @@
+alias: SOC Maximum automatisch setzen basierend auf Electric Level
+description: >-
+  Setzt number.hyper_2000_soc_maximum auf 85% oder 100%, abhängig davon, ob der
+  sensor.electriclevel in den letzten 14 Tagen 100% erreicht hat.
+triggers:
+  - at: "03:00:00"
+    trigger: time
+conditions: []
+actions:
+  - alias: Prüfe ob der Electric Level in den letzten 14 Tagen 100% erreicht hat
+    choose:
+      - conditions:
+          - condition: template
+            value_template: >
+              {% set entries = state_attr('sensor.electriclevel', 'history') %}
+              {% set now = now() %} {% set cutoff = now - timedelta(days=14) %}
+              {% for entry in entries %}
+                {% if entry.state | float == 100 and as_datetime(entry.last_changed) > cutoff %}
+                  {{ true }}
+                {% endif %}
+              {% endfor %} {{ false }}
+        sequence:
+          - target:
+              entity_id: number.hyper_2000_soc_maximum
+            data:
+              value: 85
+            action: number.set_value
+    default:
+      - target:
+          entity_id: number.hyper_2000_soc_maximum
+        data:
+          value: 100
+        action: number.set_value
+mode: single
